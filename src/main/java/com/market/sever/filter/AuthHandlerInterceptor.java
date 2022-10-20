@@ -26,8 +26,8 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
     @Autowired
     TokenUtil tokenUtil;
     private String privateKey = "Je sais les cieux crevant en éclairs, et les trombes";
-    private Long yangToken = Long.valueOf(100000);
-    private Long oldToken = Long.valueOf(300000);
+    private Long yangToken = Long.valueOf(1000000);
+    private Long oldToken = Long.valueOf(3000000);
     /**
      * 权限认证的拦截操作.
      */

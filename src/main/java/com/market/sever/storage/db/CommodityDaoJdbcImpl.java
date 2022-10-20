@@ -6,6 +6,7 @@ import com.market.sever.storage.spi.CommodityDao;
 import java.util.List;
 import com.market.sever.entity.User;
 import com.market.sever.storage.spi.UserDao;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,6 +21,7 @@ import java.util.Optional;
 /**
  * @author u7382548
  */
+@Slf4j
 @Repository
 public class CommodityDaoJdbcImpl implements CommodityDao {
 
@@ -71,11 +73,21 @@ public class CommodityDaoJdbcImpl implements CommodityDao {
 
     @Override
     public List<Commodity> searchByName(String name) {
-        String sql = "Select * from MarketPlace.Commodity where name like :name";
+        String sql;
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("brand", "%"+name+"%");
-        List<Commodity> commodities = namedParameterJdbcTemplate.query(sql,mapSqlParameterSource,ROWMAPPER);
-        return commodities;
+        log.warn(name);
+        if(name.equals("admin_try")){
+            sql = "Select * from MarketPlace.Commodity limit 0,10";
+            List<Commodity> commodities =namedParameterJdbcTemplate.query(sql,ROWMAPPER);
+            log.warn("This is a warn"+commodities.size());
+            return commodities;
+        }else {
+            sql = "Select * from MarketPlace.Commodity where name like :name";
+            mapSqlParameterSource.addValue("name", "%"+name+"%");
+            log.warn("Wrong Way");
+            List<Commodity> commodities = namedParameterJdbcTemplate.query(sql,mapSqlParameterSource,ROWMAPPER);
+            return commodities;
+        }
     }
 
     @Override
@@ -108,9 +120,9 @@ public class CommodityDaoJdbcImpl implements CommodityDao {
 
     @Override
     public long updateCommodityInfo(Commodity commodity) {
-        String sql = "UPDATE Market.Place"+
-                "SET name=:name, price =:price, img_url=:img_url,description=:description,brand=:brand,category=:category,belongID=:belongID"
-                + "WHERE commodity_id = :id";
+        String sql = "UPDATE MarketPlace.Commodity "+
+                "SET name=:name, price =:price, img_url=:img_url,description=:description,brand=:brand,category=:category,status= :status,belongID=:belongID"
+                + " WHERE commodity_id = :id";
         MapSqlParameterSource paramMap = new MapSqlParameterSource();
         paramMap.addValue("id", commodity.getCommodity_id());
         paramMap.addValue("name", commodity.getName());
@@ -120,6 +132,7 @@ public class CommodityDaoJdbcImpl implements CommodityDao {
         paramMap.addValue("description",commodity.getDescription());
         paramMap.addValue("brand",commodity.getBrand());
         paramMap.addValue("category",commodity.getCategory());
+        paramMap.addValue("status",commodity.getStatus());
         paramMap.addValue("belongID",commodity.getBelongUserID());
         int result = namedParameterJdbcTemplate.update(sql,paramMap);
         return result;
@@ -134,6 +147,7 @@ public class CommodityDaoJdbcImpl implements CommodityDao {
         commodity.setDescription(rs.getString("description"));
         commodity.setBrand(rs.getString("brand"));
         commodity.setCategory(rs.getString("category"));
+        commodity.setStatus(rs.getInt("status"));
         commodity.setBelongUserID(rs.getLong("belongID"));
         return commodity;
     };

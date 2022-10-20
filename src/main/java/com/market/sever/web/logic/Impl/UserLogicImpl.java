@@ -34,6 +34,11 @@ public class UserLogicImpl implements UserLogic {
     }
 
     @Override
+    public Optional<UserVO> findUserByUserVOName(String name) {
+        return Optional.of(UserVOWrapper.wrapper(userService.findUserByUserName(name)));
+    }
+
+    @Override
     public Optional<UserVO> findUserByUserVOEmail(String email) {
         return Optional.of(UserVOWrapper.wrapper(userService.findUserByUserEmail(email)));
     }
@@ -44,17 +49,17 @@ public class UserLogicImpl implements UserLogic {
     }
 
     @Override
-    public CommonResult logIn(String email, String password) {
-        User user = userService.findUserByUserEmail(email);
+    public CommonResult logIn(String username, String password) {
+        User user = userService.findUserByUserName(username);
         if(user.getEmail()==null){
             return CommonResult.objectNotExist();
         }
         if(password.equals(user.getPsw())){
             CommonResult cr = new CommonResult();
             TokenUtil tokenUtil = new TokenUtil();
-            cr.setToken(tokenUtil.getToken(email));
+            cr.setToken(tokenUtil.getToken(username));
             //System.out.println(cr.getToken());
-            cr.setData(findUserByUserVOEmail(email));
+            cr.setData(findUserByUserVOName(username));
             cr.setCode(200);
             cr.setMessage("Successfully login");
             return cr;

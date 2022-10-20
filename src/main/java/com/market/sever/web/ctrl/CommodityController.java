@@ -66,7 +66,7 @@ public class CommodityController {
     @PostMapping(value = "/postCommodity")
     public CommonResult addNewCommodity(@RequestBody Commodity commodity){
         return CommonResult.successWithData(commodityLogic.findCommodityByID(commodityLogic.addNewCommodity(commodity.getName(),commodity.getPrice()
-                ,commodity.getImg_url(),commodity.getDescription(),commodity.getBrand(),commodity.getCategory(),commodity.getBelongUserID())));
+                ,commodity.getImg_url(),commodity.getDescription(),commodity.getCategory(),commodity.getBrand(),commodity.getBelongUserID())));
     }
 
     @ApiOperation("更新商品除商品ID外的任意信息")

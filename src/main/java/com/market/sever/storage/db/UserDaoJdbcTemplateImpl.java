@@ -8,6 +8,7 @@ package com.market.sever.storage.db;
 
 import com.market.sever.entity.User;
 import com.market.sever.storage.spi.UserDao;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -24,6 +25,7 @@ import java.util.Optional;
 /**
  * @author u7382548
  */
+@Slf4j
 @Repository
 public class UserDaoJdbcTemplateImpl implements UserDao {
 
@@ -87,6 +89,21 @@ public class UserDaoJdbcTemplateImpl implements UserDao {
             return null;
         }
 
+    }
+
+    @Override
+    public User findByUserName(String username) {
+        String sql = "select * from MarketPlace.user where username = :username limit 0,1";
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("username", username);
+        try {
+            User user = namedParameterJdbcTemplate.queryForObject(sql,mapSqlParameterSource,ROWMAPPER);
+            log.info(user.getUserName()+"==="+user.getUserId());
+            return user;
+        }
+        catch (EmptyResultDataAccessException e){
+            return null;
+        }
     }
 
     private static final RowMapper<User> ROWMAPPER= (ResultSet rs, int rowNum)->{

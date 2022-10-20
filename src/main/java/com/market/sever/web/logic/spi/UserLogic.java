@@ -14,8 +14,9 @@ import java.util.Optional;
 public interface UserLogic {
     User findUserByUserId(long userId);
     User findUserByUserEmail(String email);
+    public Optional<UserVO> findUserByUserVOName(String name);
     public Optional<UserVO> findUserByUserVOEmail(String email);
     List<User> findByName(String userName);
-    CommonResult logIn(String email, String password);
+    CommonResult logIn(String username, String password);
     long registerUser( String user_name, String password,String email);
 }

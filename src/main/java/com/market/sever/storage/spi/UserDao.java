@@ -18,7 +18,7 @@ public interface UserDao {
 
     long add(User user);
     User find(String email);
-
+    User findByUserName(String username);
     User find(long id);
 
     List<User> findByName(String userName);

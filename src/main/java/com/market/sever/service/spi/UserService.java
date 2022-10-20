@@ -17,6 +17,7 @@ import java.util.Optional;
 public interface UserService {
     User findUserByUserEmail(String email);
     User findUserByUserId(long userId);
+    User findUserByUserName(String name);
     long registerUser(User user);
     List<User> find(List<Long> user_ids);
     List<User> findByName(String userName);

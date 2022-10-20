@@ -51,8 +51,8 @@ public class MainController {
 
     @ApiOperation("验证账号密码")
     @GetMapping(value = "/login")
-    public CommonResult logIn(@RequestParam("email")String email, @RequestParam("password")String password){
-        return userLogic.logIn(email,password);
+    public CommonResult logIn(@RequestParam("username")String username, @RequestParam("password")String password){
+        return userLogic.logIn(username,password);
     }
 
     @ApiOperation("注册账号")
