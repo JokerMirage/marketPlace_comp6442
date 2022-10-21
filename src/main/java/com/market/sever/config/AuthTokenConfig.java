@@ -15,13 +15,13 @@ public class AuthTokenConfig implements WebMvcConfigurer {
     AuthHandlerInterceptor authHandlerInterceptor;
 
     /**
-     * 给除了 /login 的接口都配置拦截器,拦截转向到 authHandlerInterceptor
+     * Excepting '/login' api, other requests are redirected to authHandlerInterceptor.
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authHandlerInterceptor)
-                .addPathPatterns("/market/api/**")
-                .excludePathPatterns("/market/api/user/login","/market/api/user/register");
+//        registry.addInterceptor(authHandlerInterceptor)
+//                .addPathPatterns("/market/api/**")
+//                .excludePathPatterns("/market/api/user/login","/market/api/user/register");
     }
 }
 

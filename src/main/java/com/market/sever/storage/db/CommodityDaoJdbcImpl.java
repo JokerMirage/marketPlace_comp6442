@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.util.Optional;
 /**
  * @author u7382548
+ * @Description This is a database access class for all APIs related to database.
  */
 @Slf4j
 @Repository
@@ -27,6 +28,7 @@ public class CommodityDaoJdbcImpl implements CommodityDao {
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
 
     @Override
     public Optional<Commodity> getByID(long id) {

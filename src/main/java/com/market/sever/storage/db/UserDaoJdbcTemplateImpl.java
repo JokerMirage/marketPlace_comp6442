@@ -24,6 +24,7 @@ import java.util.Optional;
 
 /**
  * @author u7382548
+ * @Description This is a class of methods for all APIs realated to user data.
  */
 @Slf4j
 @Repository

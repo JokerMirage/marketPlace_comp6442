@@ -19,7 +19,7 @@ public class TokenUtil {
     private final String privateKey = "Je sais les cieux crevant en éclairs, et les trombes";
 
     /**
-     * 加密token.
+     * Encoding token by HAMC256 encryption.
      */
     public String getToken(String email) {
         //这个是放到负载payLoad 里面,魔法值可以使用常量类进行封装.
@@ -32,8 +32,7 @@ public class TokenUtil {
     }
 
     /**
-     * 解析token.
-     * (优化可以用常量固定魔法值+使用DTO在 mvc 之前传输数据，而不是 map,这里因为篇幅原因就不做了)
+     * decoding token.
      * {
      * "userId": "3412435312",
      * "timeStamp": "134143214"
