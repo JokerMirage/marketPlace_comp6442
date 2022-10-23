@@ -19,9 +19,9 @@ public class AuthTokenConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(authHandlerInterceptor)
-//                .addPathPatterns("/market/api/**")
-//                .excludePathPatterns("/market/api/user/login","/market/api/user/register");
+        registry.addInterceptor(authHandlerInterceptor)
+                .addPathPatterns("/market/api/**")
+                .excludePathPatterns("/market/api/user/login","/market/api/user/register");
     }
 }
 
